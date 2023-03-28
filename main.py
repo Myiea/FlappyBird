@@ -12,8 +12,8 @@ def draw_floor():
 
 def create_pipe():
     random_pipe_pos = random.choice(pipe_height)
-    bottom_pipe = surfacepipe.get_rect(midtop=(500, random_pipe_pos))
-    top_pipe = surfacepipe.get_rect(midtop=(500, random_pipe_pos - 650))
+    bottom_pipe = surface_pipe.get_rect(midtop=(500, random_pipe_pos))
+    top_pipe = surface_pipe.get_rect(midtop=(500, random_pipe_pos - 650))
     return bottom_pipe, top_pipe
 
 
@@ -25,10 +25,10 @@ def move_pipe(pipes):
 
 def draw_pipe(pipes):
     for pipe in pipes:
-        if pipe.bottom >= 768:
-            screen.blit(surfacepipe, pipe)
+        if pipe.bottom >= 600:
+            screen.blit(surface_pipe, pipe)
         else:
-            flip_pipe = pygame.transform.flip(surfacepipe, False, True)
+            flip_pipe = pygame.transform.flip(surface_pipe, False, True)
             screen.blit(flip_pipe, pipe)
 
 
@@ -64,12 +64,12 @@ floor_x_pos = 0
 # bird image
 bird = pygame.image.load('assets/yellowbird-midflap.png').convert()
 bird = pygame.transform.scale2x(bird)
-# create a rectangle around the bird to detect postion
+# create a rectangle around the bird to detect position
 bird_rect = bird.get_rect(center=(100, 384))
 
 # create pipe
-surfacepipe = pygame.image.load('assets/pipe-green.png').convert()
-surfacepipe = pygame.transform.scale2x(surfacepipe)
+surface_pipe = pygame.image.load('assets/pipe-green.png').convert()
+surface_pipe = pygame.transform.scale2x(surface_pipe)
 # add all the pipes create in this list
 pipe_list = []
 
