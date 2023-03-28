@@ -3,19 +3,26 @@ import pygame
 import sys
 import random
 
+
 # create game constant
 def draw_floor():
-    screen.blit(floor, (floor_x_pos,650))
-    screen.blit(floor, (floor_x_pos+432,650))
+    screen.blit(floor, (floor_x_pos, 650))
+    screen.blit(floor, (floor_x_pos + 432, 650))
+
+
 def create_pipe():
     random_pipe_pos = random.choice(pipe_height)
-    bottom_pipe = surfacepipe.get_rect(midtop = (500, random_pipe_pos))
-    top_pipe = surfacepipe.get_rect(midtop = (500, random_pipe_pos-650))
+    bottom_pipe = surfacepipe.get_rect(midtop=(500, random_pipe_pos))
+    top_pipe = surfacepipe.get_rect(midtop=(500, random_pipe_pos - 650))
     return bottom_pipe, top_pipe
+
+
 def move_pipe(pipes):
     for pipe in pipes:
         pipe.centerx -= 5
     return pipes
+
+
 def draw_pipe(pipes):
     for pipe in pipes:
         if pipe.bottom >= 768:
@@ -23,6 +30,8 @@ def draw_pipe(pipes):
         else:
             flip_pipe = pygame.transform.flip(surfacepipe, False, True)
             screen.blit(flip_pipe, pipe)
+
+
 def check_collision(pipes):
     for pipe in pipes:
         if bird_rect.colliderect(pipe):
@@ -32,24 +41,20 @@ def check_collision(pipes):
     return True
 
 
-
-
-
-
 pygame.init()
 
 # set up flappy bird display
 screen = pygame.display.set_mode((432, 768))
 clock = pygame.time.Clock()
 
-
 # create variables for game
-gravity = 0.25 
+gravity = 0.25
 bird_movement = 0
 game_active = True
 
 # background image
-bg = pygame.image.load('assets/background-night.png').convert() # could add '.convert()' in order for pygame to load images faster 
+bg = pygame.image.load(
+    'assets/background-night.png').convert()  # could add '.convert()' in order for pygame to load images faster
 bg = pygame.transform.scale2x(bg)
 # floor image
 floor = pygame.image.load('assets/floor.png').convert()
@@ -60,7 +65,7 @@ floor_x_pos = 0
 bird = pygame.image.load('assets/yellowbird-midflap.png').convert()
 bird = pygame.transform.scale2x(bird)
 # create a rectangle around the bird to detect postion
-bird_rect = bird.get_rect(center = (100, 384))
+bird_rect = bird.get_rect(center=(100, 384))
 
 # create pipe
 surfacepipe = pygame.image.load('assets/pipe-green.png').convert()
@@ -82,19 +87,19 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 bird_movement = 0
-                bird_movement =-11
+                bird_movement = -11
         if event.type == pipe_spawn:
             pipe_list.extend(create_pipe())
             print(create_pipe)
 
     # blit image onto surface
-    screen.blit(bg,(0, 0))
+    screen.blit(bg, (0, 0))
     if game_active:
         # create bird gravity to make it appear to be falling
         bird_movement += gravity
         bird_rect.centery += bird_movement
         screen.blit(bird, bird_rect)
-        game_active= check_collision(pipe_list)
+        game_active = check_collision(pipe_list)
         # take all the pipes in pipelist to put on the screen
         pipe_list = move_pipe(pipe_list)
         draw_pipe(pipe_list)
@@ -106,8 +111,7 @@ while True:
     draw_floor()
     if floor_x_pos <= -432:
         floor_x_pos = 0
-        
+
     # if the user exit the game the window is update and the frame rate is set to 60
     pygame.display.update()
     clock.tick(120)
-    
