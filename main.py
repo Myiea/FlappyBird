@@ -41,6 +41,11 @@ def check_collision(pipes):
     return True
 
 
+def rotate_bird(bird1):
+    new_bird = pygame.transform.rotozoom(bird1, bird_movement, 1)
+    return new_bird
+
+
 pygame.init()
 
 # set up flappy bird display
@@ -102,8 +107,9 @@ while True:
     if game_active:
         # create bird gravity to make it appear to be falling
         bird_movement += gravity
+        rotated_bird = rotate_bird(bird)
         bird_rect.centery += bird_movement
-        screen.blit(bird, bird_rect)
+        screen.blit(rotated_bird , bird_rect)
         game_active = check_collision(pipe_list)
         # take all the pipes in pipelist to put on the screen
         pipe_list = move_pipe(pipe_list)
